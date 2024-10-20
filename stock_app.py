@@ -79,8 +79,8 @@ def update_stock():
 
         # Prompt admin for new price and quantity
         try:
-            new_price = float(input(f"Enter the new price for {stock.stock_Name} (current price: {stock.price}): ").strip())
-            new_quantity = int(input(f"Enter the new quantity available for {stock.stock_Name} (current quantity: {stock.quantity_available}): ").strip())
+            new_price = float(input(f"Enter the new price for {stock.stock_name} (current price: {stock.price}): ").strip())
+            new_quantity = int(input(f"Enter the new quantity available for {stock.stock_name} (current quantity: {stock.quantity_available}): ").strip())
 
             # Update stock object with new values
             stock.price = new_price
@@ -89,7 +89,7 @@ def update_stock():
             # Prepare the updated data
             updated_data = {
                 'stock_code': stock.stock_code,
-                'stock_name': stock.stock_Name,
+                'stock_name': stock.stock_name,
                 'price': stock.price,
                 'high_price': stock.high_price,
                 'low_price': stock.low_price,
@@ -104,21 +104,77 @@ def update_stock():
     else:
         print(f"Stock with code '{stock_code}' not found.")
 
+# Function to add a new stock
+def add_stock():
+    try:
+        stock_code = input("Enter new stock code: ").strip()
+        stock_name = input("Enter stock name: ").strip()
+        price = float(input("Enter stock price: ").strip())
+        high_price = float(input("Enter high price: ").strip())
+        low_price = float(input("Enter low price: ").strip())
+        quantity_available = int(input("Enter quantity available: ").strip())
+
+        # Create a Stock object
+        stock = Stock(stock_code, stock_name, price, high_price, low_price, quantity_available)
+
+        # Prepare the data to insert into Couchbase
+        stock_data = {
+            'stock_code': stock.stock_code,
+            'stock_name': stock.stock_name,
+            'price': stock.price,
+            'high_price': stock.high_price,
+            'low_price': stock.low_price,
+            'quantity_available': stock.quantity_available
+        }
+
+        # Insert the stock into Couchbase
+        collection.upsert(f"stock_{stock_code}", stock_data)
+        print(f"Stock '{stock_code}' added successfully!")
+    
+    except Exception as e:
+        print(f"Error adding stock: {e}")
+
+# Function to remove a stock
+def remove_stock():
+    try:
+        stock_code = input("Enter the stock code you want to remove: ").strip()
+
+        # Try to retrieve the stock to ensure it exists
+        stock = get_stock_info(stock_code)
+        
+        if stock:
+            # Remove the stock document from Couchbase
+            collection.remove(f"stock_{stock_code}")
+            print(f"Stock '{stock_code}' removed successfully!")
+        else:
+            print(f"Stock with code '{stock_code}' not found.")
+    
+    except DocumentNotFoundException:
+        print(f"Stock with code '{stock_code}' not found.")
+    except Exception as e:
+        print(f"Error removing stock: {e}")
+
 # Admin menu for managing stock data
 def admin_functions():
     while True:
-        print("Admin Menu:")
+        print("\nAdmin Menu:")
         print("1. Update Stock Information")
-        print("2. Exit Admin Menu")
+        print("2. Add New Stock")
+        print("3. Remove Stock")
+        print("4. Exit Admin Menu")
 
         choice = input("Enter your choice: ").strip()
         if choice == '1':
             update_stock()
         elif choice == '2':
+            add_stock()  # Add new stock
+        elif choice == '3':
+            remove_stock()  # Remove existing stock
+        elif choice == '4':
             print("Exiting Admin Menu.")
             break
         else:
-            print("Invalid choice. Please enter 1 or 2.")
+            print("Invalid choice. Please enter 1, 2, 3, or 4.")
 
 def customer_functions():
     print("Customer functions started.")
@@ -178,10 +234,10 @@ def create_user():
     
     # Save the user to Couchbase
     user_data = {
-        'user_id': user.user_id,      # Updated to match the User class
-        'user_email': user.user_email, # Updated to match the User class
-        'user_name': user.user_name,   # Updated to match the User class
-        'is_admin': user.is_admin      # Updated to match the User class
+        'user_id': user.user_id,      
+        'user_email': user.user_email, 
+        'user_name': user.user_name,   
+        'is_admin': user.is_admin      
     }
     
     # Insert the user into Couchbase
