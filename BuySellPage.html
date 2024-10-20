@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSphere - Trade <?php echo htmlspecialchars($stock['stock_name']); ?></title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="trade.js" defer></script>
+</head>
+<body>
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="MainStockPage.html">Stocks</a></li>
+            <li><a href=Portfolio.html#">My Portfolio</a></li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+            <li><a href="ContactUsPage.html">Contact Us</a></li>
+            <li><a href="HomePage(LoggedOut).html">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Trade Stock</h1>
+
+    <!-- Buy/Sell radio buttons styled as clickable buttons -->
+    <form id="tradeForm">
+        <div class="trade-action">
+            <!-- Buy option -->
+            <input type="radio" id="buy" name="trade_action" value="buy" checked>
+            <label for="buy" class="action-button buy">Buy</label>
+
+            <!-- Sell option -->
+            <input type="radio" id="sell" name="trade_action" value="sell">
+            <label for="sell" class="action-button sell">Sell</label>
+        </div>
+
+        <!-- Stock Ticker Input -->
+        <div class="trade-inputs">
+            <label for="ticker">Stock Ticker:</label>
+            <input type="text" id="ticker" name="ticker" placeholder="Enter stock ticker" required>
+
+            <label for="quantity">Number of Shares:</label>
+            <input type="number" id="quantity" name="quantity" min="1" placeholder="Enter number of shares">
+
+            <label for="total_value">Or Enter Total Value ($):</label>
+            <input type="number" id="total_value" name="total_value" min="1" step="0.01" placeholder="Enter total value">
+        </div>
+
+        <button type="button" class="confirm-button" onclick="confirmTrade()">Confirm</button>
+    </form>
+
+    <!-- Confirmation Popup -->
+    <div id="popup" class="popup" style="display: none;"> <!-- Start hidden -->
+        <div class="popup-content">
+            <span class="close" onclick="closePopup()">&times;</span>
+            <h2>Confirm Transaction</h2>
+            <p id="confirmationMessage"></p>
+            <button onclick="proceedWithTrade()">Yes, Confirm</button>
+            <button onclick="closePopup()">No, Go Back</button>
+        </div>
+    </div>
+</main>
+
+<footer>
+    <hr>
+    <div class="logo">StockSphere</div>
+</footer>
+</body>
+</html>

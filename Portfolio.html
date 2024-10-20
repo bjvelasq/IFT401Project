@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSphere - My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="MainStockPage.html">Stocks</a></li>
+            <li><a href=Portfolio.html#">My Portfolio</a></li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+            <li><a href="ContactUsPage.html">Contact Us</a></li>
+            <li><a href="HomePage(LoggedOut).html">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>My Portfolio</h1>
+    <div class="portfolio-overview">
+        <div class="asset-summary">
+            <h2>Total Assets</h2>
+            <p>$<?php echo htmlspecialchars($portfolio['total_assets']); ?></p>
+        </div>
+        <div class="cash-balance">
+            <h2>Cash Balance</h2>
+            <p>$<?php echo htmlspecialchars($portfolio['cash_balance']); ?></p>
+        </div>
+    </div>
+    /* Add Deposit Button */
+
+
+    <div class="portfolio-graph">
+        <h2>Portfolio Value Changes</h2>
+        <img src="graph_placeholder.png" alt="Graph showing portfolio value changes" class="portfolio-graph-img">
+    </div>
+
+    <h2>Owned Stocks</h2>
+    <div class="stock-grid">
+        /* Stock Grid Code from Database */
+
+    </div>
+</main>
+
+<footer>
+    <hr>
+    <div class="logo">StockSphere</div>
+</footer>
+</body>
+</html>

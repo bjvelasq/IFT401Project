@@ -1,0 +1,588 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    transition: background 0.3s;
+}
+
+nav ul li a:hover {
+    background-color: #555;
+}
+
+main {
+    padding: 20px;
+}
+
+/* Intro Section */
+.intro {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.intro h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.intro p {
+    font-size: 18px;
+    color: #777;
+}
+
+/* News Block */
+.news {
+    margin-bottom: 40px;
+}
+
+.news h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.news .news-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.news .news-content article {
+    background: white;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Stock Grid */
+.popular-stocks {
+    margin-bottom: 40px;
+}
+
+.popular-stocks h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.stock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stock-item {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.stock-graph img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.stock-info h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.stock-info p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    background-color: #333;
+    color: white;
+}
+
+footer .footer-logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .stock-grid {
+        grid-template-columns: 1fr;
+    }
+
+    nav ul {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* Form Section */
+.form-section {
+    width: 300px;
+    margin: 50px auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-section h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.form-section label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.form-section input[type="text"],
+.form-section input[type="email"],
+.form-section input[type="password"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+.form-section input[type="submit"] {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.form-section input[type="submit"]:hover {
+    background-color: #555;
+}
+
+.form-section p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Star Rating Style - Horizontal (Left to Right) */
+.rating {
+    display: flex;
+    justify-content: center;
+    font-size: 2em;
+    gap: 10px; /* Adjusts the spacing between stars */
+}
+
+.rating input {
+    display: none; /* Hide the radio buttons */
+}
+
+/* Default style for stars */
+.rating label {
+    cursor: pointer;
+    color: #ddd; /* Default color for unselected stars */
+    transition: color 0.3s;
+}
+
+/* Highlight stars up to the selected one when clicked */
+.rating input:checked ~ label {
+    color: #ddd; /* Reset stars after the selected one */
+}
+
+.rating input:checked + label,
+.rating input:checked + label ~ label {
+    color: gold; /* Highlight the selected star and all previous stars */
+}
+
+/* Hover effect: highlight the star and all previous stars */
+.rating label:hover,
+.rating label:hover ~ label {
+    color: gold; /* Highlight the hovered star and all stars before it */
+}
+
+/* Transaction Table Styles */
+.transaction-table {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.transaction-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.transaction-table th, .transaction-table td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.transaction-table th {
+    background-color: #333;
+    color: white;
+}
+
+.transaction-table td {
+    background-color: #f9f9f9;
+}
+
+.transaction-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Portfolio Page */
+.portfolio-overview {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.portfolio-overview > div {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 45%;
+    text-align: center;
+}
+
+.portfolio-graph {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.portfolio-graph img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.stock-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.stock-block {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stock-block h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.stock-block p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* Stock Page */
+.stock-info {
+    text-align: center;
+}
+
+.stock-info h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.stock-details {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+.stock-details > div {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 40%;
+    text-align: center;
+}
+
+.stock-graph {
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.stock-graph img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.stock-description {
+    margin-bottom: 40px;
+}
+
+.stock-description h2 {
+    font-size: 24px;
+}
+
+.stock-description p {
+    font-size: 16px;
+}
+
+.stock-market-cap {
+    margin-bottom: 40px;
+}
+
+.stock-market-cap h2 {
+    font-size: 24px;
+}
+
+.stock-market-cap p {
+    font-size: 18px;
+    color: #333;
+}
+
+.stock-actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+
+.buy-button, .sell-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.buy-button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.sell-button {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Buy/Sell Page */
+/* Hide the radio buttons */
+input[type="radio"] {
+    display: none;
+}
+
+/* Style the labels as buttons */
+.trade-action {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.action-button {
+    width: 150px;
+    padding: 10px 20px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* Default colors for Buy/Sell buttons */
+.buy {
+    background-color: #e0ffe0;
+    color: #006600;
+}
+
+.sell {
+    background-color: #ffe0e0;
+    color: #990000;
+}
+
+/* Style for selected Buy button */
+input[type="radio"]:checked + .buy {
+    background-color: #00cc00;
+    color: white;
+}
+
+/* Style for selected Sell button */
+input[type="radio"]:checked + .sell {
+    background-color: #cc0000;
+    color: white;
+}
+
+/* Form input styling */
+.trade-inputs {
+    margin: 20px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+/* Confirm button styling */
+.confirm-button {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px 20px;
+    font-size: 18px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.confirm-button:hover {
+    background-color: #003399;
+}
+
+
+/* Popup styles */
+.popup {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1000; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+.popup-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Admin Portal */
+.admin-container {
+    background-color: #ffffff;  /* White background */
+    border: 2px solid black;    /* Black border */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin: 20px 0;  /* Add space above and below the container */
+}
+
+.admin-options {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.option {
+    background-color: #007bff;  /* Blue background */
+    color: white;                /* White text */
+    border: none;                /* Remove border */
+    border-radius: 8px;
+    padding: 40px;
+    margin: 10px 0;             /* Space between options */
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.option h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.option:hover {
+    background-color: #0056b3;  /* Darker blue on hover */
+    transform: scale(1.05);
+}
+
+#market-hours-dropdown,
+#stock-options-dropdown {
+    margin-top: 20px;
+}
+
+label {
+    display: block;
+    margin: 10px 0 5px; /* Add spacing for better layout */
+}
+
+input[type="text"],
+input[type="number"],
+input[type="time"],
+textarea {
+    width: calc(100% - 10px); /* Full width with some padding */
+    padding: 5px;
+}
+
+textarea {
+    height: 100px; /* Fixed height for the description */
+}

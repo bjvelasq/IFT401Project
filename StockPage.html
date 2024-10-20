@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSphere - </* Stock Name from Database */></title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="MainStockPage.html">Stocks</a></li>
+            <li><a href=Portfolio.html#">My Portfolio</a></li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+            <li><a href="ContactUsPage.html">Contact Us</a></li>
+            <li><a href="HomePage(LoggedOut).html">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <div class="stock-info">
+        <h1>/* Stock Name from Database */</h1>
+        <div class="stock-details">
+            <div class="stock-value">
+                <h2>Current Value</h2>
+                /* Stock Value from Database */
+            </div>
+            <div class="stock-change">
+                <h2>% Change</h2>
+                /* Stock %Change from Database */
+            </div>
+        </div>
+
+        <div class="stock-graph">
+            <h2>Stock Value Over Time</h2>
+            /* Stock Graph? from Database */
+        </div>
+
+        <div class="stock-market-cap">
+            <h2>Total Market Cap</h2>
+            /* Stock Market Cap from Database */
+        </div>
+
+        <div class="stock-actions">
+            <button class="buy-button" onclick="redirectToTrade('XYZ', 'buy')">Buy</button>
+            <button class="sell-button" onclick="redirectToTrade('XYZ', 'sell')">Sell</button>
+        </div>
+
+        <div class="stock-description">
+            <h2>Description</h2>
+            /* Stock Description from Database */
+        </div>
+
+    </div>
+</main>
+
+<footer>
+    <hr>
+    <div class="logo">StockSphere</div>
+</footer>
+</body>
+</html>

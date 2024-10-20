@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>StockSphere - Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="LoginPage.html">Stocks</a></li>
+            <li><a href="LoginPage.html">My Portfolio</a></li>
+            <li><a href="LoginPage.html">Transaction History</a></li>
+            <li><a href="LoginPage.html">Contact Us</a></li>
+            <li><a href="LoginPage.html">Sign In</a></li>
+            <li><a href="SignUpPage.html">Register</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Login Form -->
+<main>
+    <section class="form-section">
+        <h1>Login</h1>
+        <form action="login_script.php" method="POST">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+
+            <input type="submit" value="Login">
+        </form>
+
+        <p>Don't have an account? <a href="signup.html">Sign up here</a>.</p>
+    </section>
+</main>
+</body>
+</html>
