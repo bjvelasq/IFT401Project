@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>StockSphere - Contact Us</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<!-- Header -->
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="MainStockPage.html">Stocks</a></li>
+            <li><a href=Portfolio.html#">My Portfolio</a></li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+            <li><a href="ContactUsPage.html">Contact Us</a></li>
+            <li><a href="HomePage(LoggedOut).html">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<!-- Contact Us Form -->
+<main>
+    <section class="form-section">
+        <h1>Contact Us</h1>
+        <form action="contact_script.php" method="POST">
+            <label for="rating">Rate your experience (5* - 1*):</label>
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5" title="5 stars">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 stars">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 stars">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 stars">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 star">★</label>
+            </div>
+
+            <label for="comment">Additional Comments (Optional):</label>
+            <textarea id="comment" name="comment" rows="4" placeholder="Enter your comments here..."></textarea>
+
+            <input type="submit" value="Submit">
+        </form>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StockSphere - Admin Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+  <script>
+        function toggleMarketHours() {
+            const dropdown = document.getElementById('market-hours-dropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function confirmHours() {
+            const selectedHours = document.getElementById('market-hours').value;
+            alert(`Market hours set to: ${selectedHours} GMT`);
+            // Here you can add code to send the selected hours to your server/database
+        }
+    </script>
+</head>
+<body>
+<header>
+  <div class="logo">StockSphere</div>
+  <nav>
+    <ul>
+      <li><a href="AdminDashboard.html">Admin Home</a></li>
+      <li><a href="LoginPage.html">Logout</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <h1>Admin Dashboard</h1>
+  <div class="admin-container">
+    <div class="option edit-market" onclick="toggleMarketHours()">
+      <h2>Edit Market</h2>
+    </div>
+
+    <div id="market-hours-dropdown" style="display: none; margin-top: 20px;">
+      <label for="opening-hours">Opening Hours (GMT):</label>
+      <input type="time" id="opening-hours" required>
+
+      <label for="closing-hours" style="margin-left: 20px;">Closing Hours (GMT):</label>
+      <input type="time" id="closing-hours" required>
+
+      <button onclick="confirmHours()">Confirm</button>
+    </div>
+
+
+    <div class="option add-edit-remove" onclick="toggleStockOptions()">
+      <h2>Add/Edit/Remove Stock</h2>
+    </div>
+
+    <div id="stock-options-dropdown" style="display: none; margin-top: 20px;">
+      <div>
+        <button onclick="toggleAddStock()">Add</button>
+        <button onclick="toggleEditStock()">Edit</button>
+        <button onclick="toggleRemoveStock()">Remove</button>
+      </div>
+
+      <div id="add-stock-dropdown" style="display: none; margin-top: 20px;">
+        <h3>Add Stock</h3>
+        <label for="add-stock-name">Stock Name:</label>
+        <input type="text" id="add-stock-name" required>
+
+        <label for="add-ticker">Ticker:</label>
+        <input type="text" id="add-ticker" required>
+
+        <label for="add-starting-value">Starting Value:</label>
+        <input type="number" id="add-starting-value" required>
+
+        <label for="add-market-cap">Market Cap:</label>
+        <input type="number" id="add-market-cap" required>
+
+        <label for="add-description">Description:</label>
+        <textarea id="add-description" required></textarea>
+
+        <button onclick="confirmAdd()">Confirm</button>
+      </div>
+
+      <div id="edit-stock-dropdown" style="display: none; margin-top: 20px;">
+        <h3>Edit Stock</h3>
+        <label for="edit-ticker">Stock Ticker:</label>
+        <input type="text" id="edit-ticker" required>
+        <button onclick="confirmTickerEdit()">Confirm Ticker</button> <!-- Confirm button for ticker -->
+
+        <div id="edit-fields" style="display: none; margin-top: 20px;"> <!-- Fields shown after confirming ticker -->
+          <label for="edit-stock-name">Stock Name:</label>
+          <input type="text" id="edit-stock-name" required>
+
+          <label for="edit-starting-value">Starting Value:</label>
+          <input type="number" id="edit-starting-value" required>
+
+          <label for="edit-market-cap">Market Cap:</label>
+          <input type="number" id="edit-market-cap" required>
+
+          <label for="edit-description">Description:</label>
+          <textarea id="edit-description" required></textarea>
+
+          <button onclick="confirmEdit()">Confirm Edit</button> <!-- Confirm button for edits -->
+        </div>
+      </div>
+
+      <div id="remove-stock-dropdown" style="display: none; margin-top: 20px;">
+        <h3>Remove Stock</h3>
+        <label for="remove-ticker">Stock Ticker:</label>
+        <input type="text" id="remove-ticker" required>
+        <button onclick="confirmRemove()">Confirm</button>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<footer>
+  <hr>
+  <div class="logo">StockSphere</div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

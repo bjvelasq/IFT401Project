@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockSphere - Transaction History</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+    <div class="logo">StockSphere</div>
+    <nav>
+        <ul>
+            <li><a href="MainStockPage.html">Stocks</a></li>
+            <li><a href=Portfolio.html#">My Portfolio</a></li>
+            <li><a href="TransactionHistory.html">Transaction History</a></li>
+            <li><a href="ContactUsPage.html">Contact Us</a></li>
+            <li><a href="HomePage(LoggedOut).html">Log Out</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <h1>Transaction History</h1>
+    <p>Here are all the transactions completed by your account:</p>
+
+    <!-- Transaction Table -->
+    <div class="transaction-table">
+        <table>
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Transaction Type</th>
+                <th>Amount</th>
+                <th>Ticker</th>
+                <th>Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+                    // Include the database connection script
+                    include 'transactions.php';
+
+                    // Loop through the transactions and create table rows
+            </tbody>
+        </table>
+    </div>
+</main>
+
+<footer>
+    <hr>
+    <div class="logo">StockSphere</div>
+</footer>
+</body>
+</html>
