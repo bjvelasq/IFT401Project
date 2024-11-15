@@ -1,11 +1,14 @@
+# file name: stock_app.py
+
 from couchbase.cluster import Cluster
 from couchbase.auth import PasswordAuthenticator
 from couchbase.options import ClusterOptions
 from couchbase.exceptions import CouchbaseException, DocumentNotFoundException
 from datetime import timedelta
-from stock_user import User  # Import User class
+from stock_user import User # Import User class
 from stock import Stock  # Import Stock Class
 import traceback
+from customer_functions import deposit_funds, withdraw_funds, buy_stock, sell_stock, view_portfolio
 
 # Connection configuration
 endpoint = "couchbases://cb.nnq3yiry4lf6y7e2.cloud.couchbase.com"  # Replace with your endpoint
@@ -13,6 +16,7 @@ username = "Admin"  # Username
 password = "Password123!"  # Password
 bucket_name = "Stocks"  # Stock bucket name
 user_bucket_name = "User"  # User bucket name
+portfolio_bucket_name = "Portfolios" # Portfolio bucket name
 scope_name = "_default"  
 collection_name = "_default" 
 
@@ -33,20 +37,29 @@ except Exception as e:
 # Bucket connection
 bucket = cluster.bucket(bucket_name)
 user_bucket = cluster.bucket(user_bucket_name)  # Connect to the User bucket
+portfolio_bucket = cluster.bucket(portfolio_bucket_name)  # Connect to the Portfolio bucket
+stock_bucket = cluster.bucket(bucket_name)  # Connect to the Stock bucket (same bucket as `bucket_name`)
 
 # Scope and collection setup for stocks
-scope = bucket.scope(scope_name) if scope_name else bucket.default_scope()
-collection = scope.collection(collection_name) if collection_name else bucket.default_collection()
+stock_scope = stock_bucket.scope(scope_name) if scope_name else stock_bucket.default_scope()
+stock_collection = stock_scope.collection(collection_name) if collection_name else stock_bucket.default_collection()
 
 # Scope and collection setup for users
 user_scope = user_bucket.scope(scope_name) if scope_name else user_bucket.default_scope()
 user_collection = user_scope.collection(collection_name) if collection_name else user_bucket.default_collection()
 
+# Scope and collection setup for portfolios
+portfolio_scope = portfolio_bucket.scope(scope_name) if scope_name else portfolio_bucket.default_scope()
+portfolio_collection = portfolio_scope.collection(collection_name) if collection_name else portfolio_bucket.default_collection()
+
+# Use user_collection and portfolio_collection for operations on User and Portfolio data.
+print("Collection setup completed.")
+
 # Function to retrieve stock info based on stock code and return a Stock object
 def get_stock_info(stock_code):
     try:
         # Fetch the document based on the stock code
-        result = collection.get(f"stock_{stock_code}")
+        result = stock_collection.get(f"stock_{stock_code}")
         stock_data = result.content_as[dict]
 
         # Create a Stock object from the retrieved data
@@ -97,7 +110,7 @@ def update_stock():
             }
 
             # Update the document in Couchbase
-            collection.upsert(f"stock_{stock.stock_code}", updated_data)
+            stock_collection.upsert(f"stock_{stock.stock_code}", updated_data)
             print("Stock information updated successfully!")
         except ValueError as e:
             print(f"Error with the input: {e}")
@@ -128,7 +141,7 @@ def add_stock():
         }
 
         # Insert the stock into Couchbase
-        collection.upsert(f"stock_{stock_code}", stock_data)
+        stock_collection.upsert(f"stock_{stock_code}", stock_data)
         print(f"Stock '{stock_code}' added successfully!")
     
     except Exception as e:
@@ -144,7 +157,7 @@ def remove_stock():
         
         if stock:
             # Remove the stock document from Couchbase
-            collection.remove(f"stock_{stock_code}")
+            stock_collection.remove(f"stock_{stock_code}")
             print(f"Stock '{stock_code}' removed successfully!")
         else:
             print(f"Stock with code '{stock_code}' not found.")
@@ -179,19 +192,56 @@ def admin_functions():
 def customer_functions():
     print("Customer functions started.")
     while True:
-        stock_code = input("Enter the stock code you want to search for: ").strip()
-        stock = get_stock_info(stock_code)
-        if stock:
-            stock.display_stock_info()
-        else:
-            print(f"Stock with code '{stock_code}' not found.")
+        print("\nCustomer Menu:")
+        print("1. View Stock Information")
+        print("2. Deposit Funds")
+        print("3. Withdraw Funds")
+        print("4. Buy Stock")
+        print("5. Sell Stock")
+        print("6. View Portfolio")
+        print("7. Exit")
 
-        continue_input = input("Do you want to search for another stock? (y/n): ").strip().lower()
-        if continue_input == 'n':
-            print("Exiting the application.")
+        choice = input("Enter your choice: ").strip()
+        if choice == '1':
+            stock_code = input("Enter the stock code you want to search for: ").strip()
+            stock = get_stock_info(stock_code)
+            if stock:
+                stock.display_stock_info()
+            else:
+                print(f"Stock with code '{stock_code}' not found.")
+
+        elif choice == '2':
+            user_id = input("Enter your user ID for deposit: ").strip()
+            amount = float(input("Enter amount to deposit: ").strip())
+            deposit_funds(user_id, amount, user_collection, portfolio_collection)
+
+        elif choice == '3':
+            user_id = input("Enter your user ID for withdrawal: ").strip()
+            amount = float(input("Enter amount to withdraw: ").strip())
+            withdraw_funds(user_id, amount, user_collection)
+
+        elif choice == '4':
+            user_id = input("Enter your user ID for buying stock: ").strip()
+            stock_code = input("Enter stock code: ").strip()
+            quantity = int(input("Enter quantity to buy: ").strip())
+            buy_stock(user_id, stock_code, quantity, user_collection, stock_collection, portfolio_collection)
+
+        elif choice == '5':
+            user_id = input("Enter your user ID for selling stock: ").strip()
+            stock_code = input("Enter stock code: ").strip()
+            quantity = int(input("Enter quantity to sell: ").strip())
+            sell_stock(user_id, stock_code, quantity, user_collection, stock_collection, portfolio_collection)
+
+        elif choice == '6':
+            user_id = input("Enter your user ID to view your portfolio: ").strip()
+            view_portfolio(user_id, portfolio_collection)
+
+        elif choice == '7':
+            print("Exiting Customer Menu.")
             break
-        elif continue_input != 'y':
-            print("Invalid input. Please enter 'y' to continue or 'n' to exit.")
+
+        else:
+            print("Invalid choice. Please enter a valid option.")
 
 def user_role(user):
     print(f"User role detected: {'Admin' if user.is_admin else 'Customer'}")
@@ -206,15 +256,22 @@ def user_role(user):
 # Function to search for a user in the Couchbase User bucket
 def find_user(user_id):
     try:
-        result = user_collection.get(f"user_{user_id}")  # Use user_collection instead of collection
-        user_data = result.content_as[dict]
+        # Retrieve the user data from Couchbase using user_collection
+        result = user_collection.get(f"user_{user_id}")  # Get user document by user_id
+        user_data = result.content_as[dict]  # Convert the result to a dictionary
+        
+        # Instantiate the User object with the necessary collections
         user = User(
             user_id=user_data['user_id'],
             user_email=user_data['user_email'],
             user_name=user_data['user_name'],
-            is_admin=user_data['is_admin']
+            is_admin=user_data['is_admin'],
+            user_collection=user_collection,  # Pass the user collection
+            portfolio_collection=portfolio_collection  # Pass the portfolio collection
         )
+        
         return user
+
     except DocumentNotFoundException:
         print(f"User with ID '{user_id}' not found.")
         return None
@@ -224,30 +281,36 @@ def find_user(user_id):
 
 # Function to create a new user and save to the User bucket
 def create_user():
-    user_id = input("Enter user ID: ").strip()
-    user_email = input("Enter user email: ").strip()
-    user_name = input("Enter user name: ").strip()
-    is_admin = input("Is the user an admin? (y/n): ").strip().lower() == 'y'
-    
-    # Create a User object
-    user = User(user_id, user_email, user_name, is_admin)
-    
-    # Save the user to Couchbase
-    user_data = {
-        'user_id': user.user_id,      
-        'user_email': user.user_email, 
-        'user_name': user.user_name,   
-        'is_admin': user.is_admin      
-    }
-    
-    # Insert the user into Couchbase
+    # Collect user information
+    user_id = input("Enter user ID: ")
+    user_email = input("Enter user email: ")
+    user_name = input("Enter user name: ")
+    is_admin = input("Is the user an admin? (yes/no): ").lower() == "yes"
+
     try:
-        user_collection.upsert(f"user_{user.user_id}", user_data)  # Use user_collection instead of collection
-        print(f"User '{user_id}' created successfully in Couchbase!")
-    except CouchbaseException as e:
-        print(f"Error creating user in Couchbase: {e}")
-    
-    return user
+        # Create the User object
+        user = User(
+            user_id=user_id,
+            user_email=user_email,
+            user_name=user_name,
+            is_admin=is_admin,
+            user_collection=user_collection,  # Assume `user_collection` is defined
+            portfolio_collection=portfolio_collection  # Assume `portfolio_collection` is defined
+        )
+
+        # Create the user document in the user collection
+        user.create_user()
+
+        # If the user is not an admin, create a portfolio for them
+        if not is_admin:
+            user.create_portfolio()
+
+        print(f"User {user_name} with ID {user_id} created successfully.")
+
+        return user  # Optionally return the user object
+
+    except Exception as e:
+        print(f"Error creating user: {e}")
 
 # Function to display the main menu
 def main_menu():

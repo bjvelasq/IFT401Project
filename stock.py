@@ -1,4 +1,4 @@
-# stock.py
+# file name: stock.py
 
 class Stock:
     def __init__(self, stock_code: str, stock_name: str, price: float, high_price: float, low_price: float, quantity_available: int):
@@ -16,4 +16,3 @@ class Stock:
         print(f"High Price: {self.high_price}")
         print(f"Low Price: {self.low_price}")
         print(f"Quantity Available: {self.quantity_available}")
-
